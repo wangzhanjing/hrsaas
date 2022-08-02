@@ -15,9 +15,11 @@ export function getUserInfo () {
   })
 }
 // 根据用户id获取用户详情
-export function getUserDetialById (id) {
+
+export function getUserDetailById (id) {
   return request({
     method: 'GET',
     url: `/sys/user/${id}`
   })
 }
+

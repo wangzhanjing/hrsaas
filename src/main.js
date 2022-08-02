@@ -11,9 +11,14 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+// 注册打印插件
+import Print from 'vue-print-nb'
+import Components from '@/components'
 import * as directives from '@/directives'
+import * as filters from '@/filters'
 import '@/icons' // icon
 import '@/permission' // permission control
+import CheckPermission from '@/mixin/checkPermission' // permission control
 
 /**
  * If you don't want to use mock-server
@@ -29,13 +34,21 @@ import '@/permission' // permission control
 // }
 
 // set ElementUI lang to EN
+Vue.use(Components)
 Vue.use(ElementUI, { locale })
+Vue.use(Print)
+Vue.mixin(CheckPermission) // 所有组件都有这个方法
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
 // 循环全部注册自定义指令
 Object.keys(directives).forEach(item => {
   Vue.directive(item, directives[item])
+})
+// 注册过滤器
+Object.keys(filters).forEach(key => {
+  // 注册过滤器
+  Vue.filter(key, filters[key])
 })
 Vue.config.productionTip = false
 

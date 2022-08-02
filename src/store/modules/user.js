@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
-import { login, getUserInfo, getUserDetialById } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 const state = {
   token: getToken(), // 设置token初始状态   token持久化 => 放到缓存中
   userInfo: {} // 定义一个空对象，为什么呢？
@@ -35,7 +36,7 @@ const actions = {
     // 获取用户基本信息
     const res = await getUserInfo()
     // 获取用户详情信息
-    const detial = await getUserDetialById(res.userId)
+    const detial = await getUserDetailById(res.userId)
     const allInFo = { ...res, ...detial }
     context.commit('setUserInfo', allInFo)
     return allInFo // 为什么要return呢,给后期做权限的时候做伏笔
@@ -43,6 +44,8 @@ const actions = {
   loginOut (context) {
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    resetRouter()
+    context.commit('permission/setRoutes', [], { root: true })
   }
 
 }

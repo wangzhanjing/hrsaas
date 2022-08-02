@@ -2,8 +2,8 @@
 
 import Layout from '@/layout'
 export default {
-  path: '/permission',
-  name: 'permission', // 给一级路由模块加一个name属性，做权限的时候会用到
+  path: '/permissions',
+  name: 'permissions', // 给一级路由模块加一个name属性，做权限的时候会用到
   component: Layout,
   children: [{
     path: '',

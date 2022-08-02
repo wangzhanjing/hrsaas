@@ -13,5 +13,21 @@ export default {
       title: '员工管理', // 左侧导航读取到这块的title属性
       icon: 'people'
     }
+  },
+  {
+    path: 'detial/:id?',
+    component: () => import('@/views/employees/detial'),
+    hidden: true,
+    meta: {
+      title: '员工详情'
+    }
+  },
+  {
+    path: 'print/:id',
+    component: () => import('@/views/employees/print'),
+    hidden: true,
+    meta: {
+      title: '打印列表'
+    }
   }]
 }

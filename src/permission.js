@@ -15,9 +15,17 @@ router.beforeEach(async (to, from, next) => {
       next('/')
     } else {
       if (!store.getters.userId) {
-        await store.dispatch('user/getUserInfo')
+        // 获取用户登录信息
+        const { roles } = await store.dispatch('user/getUserInfo')
+        // 获取动态路由权限
+        const routes = await store.dispatch('permission/filterRoutes', roles.menus)
+        console.log('当前动态权限路由', routes)
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
+        // 执行完addRouters之后，要使用next(to.path) 跳转到相应的地址，相当于多做一次跳转，直接调用next()的话路由表还没有设置好
+        next(to.path)
+      } else {
+        next()
       }
-      next()
     }
   } else {
     // 没有token的情况
